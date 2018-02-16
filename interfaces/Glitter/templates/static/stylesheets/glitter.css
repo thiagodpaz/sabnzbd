@@ -856,11 +856,11 @@ tr.queue-item>td:first-child>a {
 }
 
 .multioperations-selector .add-nzb-inputbox {
-    width: 20%;
+    width: 19%;
 }
 
 .multioperations-selector .add-nzb-inputbox-small {
-    width: 80px;
+    width: 120px;
     float: right;
     padding-left: 0;
     padding-top: 2px;
@@ -885,6 +885,10 @@ tr.queue-item>td:first-child>a {
 
 .multioperations-selector .add-nzb-inputbox-small input[type="radio"]:checked+span {
     opacity: 1;
+}
+
+.multioperations-selector .add-nzb-inputbox-small .buttonMoveToBottom {
+    margin-right: 7px;
 }
 
 .multioperations-selector .add-nzb-inputbox-options {
@@ -1215,7 +1219,7 @@ tr.queue-item>td:first-child>a {
     right: 0;
     padding: 8px 10px 3px 0px;
     opacity: 0.7;
-    z-index: 999;
+    z-index: 150;
 }
 
 .search-box a span {
@@ -1905,6 +1909,14 @@ input[name="nzbURL"] {
         min-width: 715px;
     }
 
+    .multioperations-selector .add-nzb-inputbox {
+        width: 18%;
+    }
+
+    .multioperations-selector .add-nzb-inputbox-options {
+        width: auto;
+    }
+
     .queue .sortable-placeholder td {
         padding: 9px 0px 8px !important;
     }
@@ -1913,6 +1925,8 @@ input[name="nzbURL"] {
     .queue-table .buttonMoveToTop {
         display: inline;
     }
+
+
 }
 
 @media screen and (min-height: 800px) {

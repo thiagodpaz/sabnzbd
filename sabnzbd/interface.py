@@ -744,13 +744,13 @@ class NzoPage(object):
                     nzf_ids.append(key)
             size = int_conv(kwargs.get('action_size', 1))
             if kwargs['action_key'] == 'Top':
-                NzbQueue.do.move_top_bulk(nzo_id, nzf_ids)
+                NzbQueue.do.move_nzf_top_bulk(nzo_id, nzf_ids)
             elif kwargs['action_key'] == 'Up':
-                NzbQueue.do.move_up_bulk(nzo_id, nzf_ids, size)
+                NzbQueue.do.move_nzf_up_bulk(nzo_id, nzf_ids, size)
             elif kwargs['action_key'] == 'Down':
-                NzbQueue.do.move_down_bulk(nzo_id, nzf_ids, size)
+                NzbQueue.do.move_nzf_down_bulk(nzo_id, nzf_ids, size)
             elif kwargs['action_key'] == 'Bottom':
-                NzbQueue.do.move_bottom_bulk(nzo_id, nzf_ids)
+                NzbQueue.do.move_nzf_bottom_bulk(nzo_id, nzf_ids)
 
         if NzbQueue.do.get_nzo(nzo_id):
             url = cherrypy.lib.httputil.urljoin(self.__root, nzo_id)

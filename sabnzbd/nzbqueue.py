@@ -578,26 +578,26 @@ class NzbQueue(object):
         return (-1, nzo1.priority)
 
     @NzbQueueLocker
-    def move_up_bulk(self, nzo_id, nzf_ids, size):
+    def move_nzf_up_bulk(self, nzo_id, nzf_ids, size):
         if nzo_id in self.__nzo_table:
             for unused in range(size):
-                self.__nzo_table[nzo_id].move_up_bulk(nzf_ids)
+                self.__nzo_table[nzo_id].move_nzf_up_bulk(nzf_ids)
 
     @NzbQueueLocker
-    def move_top_bulk(self, nzo_id, nzf_ids):
+    def move_nzf_top_bulk(self, nzo_id, nzf_ids):
         if nzo_id in self.__nzo_table:
-            self.__nzo_table[nzo_id].move_top_bulk(nzf_ids)
+            self.__nzo_table[nzo_id].move_nzf_top_bulk(nzf_ids)
 
     @NzbQueueLocker
-    def move_down_bulk(self, nzo_id, nzf_ids, size):
+    def move_nzf_down_bulk(self, nzo_id, nzf_ids, size):
         if nzo_id in self.__nzo_table:
             for unused in range(size):
-                self.__nzo_table[nzo_id].move_down_bulk(nzf_ids)
+                self.__nzo_table[nzo_id].move_nzf_down_bulk(nzf_ids)
 
     @NzbQueueLocker
-    def move_bottom_bulk(self, nzo_id, nzf_ids):
+    def move_nzf_bottom_bulk(self, nzo_id, nzf_ids):
         if nzo_id in self.__nzo_table:
-            self.__nzo_table[nzo_id].move_bottom_bulk(nzf_ids)
+            self.__nzo_table[nzo_id].move_nzf_bottom_bulk(nzf_ids)
 
     @NzbQueueLocker
     def sort_by_avg_age(self, reverse=False):

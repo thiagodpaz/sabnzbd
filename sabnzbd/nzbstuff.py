@@ -1558,13 +1558,13 @@ class NzbObject(TryList):
         return article
 
     @synchronized(NZO_LOCK)
-    def move_top_bulk(self, nzf_ids):
+    def move_nzf_top_bulk(self, nzf_ids):
         self.cleanup_nzf_ids(nzf_ids)
         if nzf_ids:
             target = range(len(nzf_ids))
 
             while 1:
-                self.move_up_bulk(nzf_ids, cleanup=False)
+                self.move_nzf_up_bulk(nzf_ids, cleanup=False)
 
                 pos_nzf_table = self.build_pos_nzf_table(nzf_ids)
 
@@ -1575,13 +1575,13 @@ class NzbObject(TryList):
                     break
 
     @synchronized(NZO_LOCK)
-    def move_bottom_bulk(self, nzf_ids):
+    def move_nzf_bottom_bulk(self, nzf_ids):
         self.cleanup_nzf_ids(nzf_ids)
         if nzf_ids:
             target = range(len(self.files) - len(nzf_ids), len(self.files))
 
             while 1:
-                self.move_down_bulk(nzf_ids, cleanup=False)
+                self.move_nzf_down_bulk(nzf_ids, cleanup=False)
 
                 pos_nzf_table = self.build_pos_nzf_table(nzf_ids)
 
@@ -1592,7 +1592,7 @@ class NzbObject(TryList):
                     break
 
     @synchronized(NZO_LOCK)
-    def move_up_bulk(self, nzf_ids, cleanup=True):
+    def move_nzf_up_bulk(self, nzf_ids, cleanup=True):
         if cleanup:
             self.cleanup_nzf_ids(nzf_ids)
         if nzf_ids:
@@ -1609,7 +1609,7 @@ class NzbObject(TryList):
                         self.files[pos] = tmp_nzf
 
     @synchronized(NZO_LOCK)
-    def move_down_bulk(self, nzf_ids, cleanup=True):
+    def move_nzf_down_bulk(self, nzf_ids, cleanup=True):
         if cleanup:
             self.cleanup_nzf_ids(nzf_ids)
         if nzf_ids:
