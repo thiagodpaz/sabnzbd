@@ -1,6 +1,8 @@
 # -*- mode: python -*-
-from PyInstaller.building.api import EXE
+import sys
+from PyInstaller.building.api import EXE, COLLECT, PYZ
 from PyInstaller.building.build_main import Analysis
+from PyInstaller.building.osx import BUNDLE
 
 block_cipher = None
 
@@ -27,12 +29,16 @@ extra_folders = [
     "interfaces/Glitter/",
     "interfaces/wizard/",
     "interfaces/Config/",
-    "win/par2/",
-    "win/unrar/",
-    "win/7zip/",
     "scripts/",
     "icons/",
 ]
+
+if sys.platform == "darwin":
+    extra_folders += ["osx/par2/", "osx/unrar/", "osx/7zip/"]
+    console_mode = True
+else:
+    extra_folders += ["win/par2/", "win/unrar/", "win/7zip/"]
+    console_mode = False
 
 for file_item in extra_files:
     extra_pyinstaller_files.append((file_item, "."))
@@ -69,7 +75,7 @@ exe = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=False,
+    console=console_mode,
     append_pkg=False,
     icon="icons/sabnzbd.ico",
 )
