@@ -45,6 +45,7 @@ try:
     import cryptography
     import chardet
     import gntp
+    import tenacity
 except ValueError:
     print("Sorry, requires Python module Cheetah 3 or higher.")
     sys.exit(1)
