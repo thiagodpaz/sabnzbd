@@ -40,7 +40,7 @@ import sabnzbd.downloader
 import sabnzbd.par2file as par2file
 import sabnzbd.utils.rarfile as rarfile
 from sabnzbd.rating import Rating
-
+from tenacity import retry
 
 class Assembler(Thread):
     do = None  # Link to the instance of this method
@@ -88,15 +88,23 @@ class Assembler(Thread):
                     try:
                         filepath = self.assemble(nzf, filepath)
                     except IOError as err:
+                        
                         # If job was deleted or in active post-processing, ignore error
-                        if not nzo.deleted and not nzo.is_gone() and not nzo.pp_active:
+                        if not nzo.deleted and not nzo.is_gone() and not nzo.pp_active:    
                             # 28 == disk full => pause downloader
                             if err.errno == 28:
                                 logging.error(T('Disk full! Forcing Pause'))
                             else:
-                                logging.error(T('Disk error on creating file %s'), clip_path(filepath))
+                                logging.error(T('Disk error on creating file %s.'), clip_path(filepath))
+                                
                             # Log traceback
                             logging.info('Traceback: ', exc_info=True)
+                            
+                            try:
+                                logging.info(self.assemble.retry.statistics)
+                            except:
+                                pass
+                            
                             # Pause without saving
                             sabnzbd.downloader.Downloader.do.pause()
                         continue
@@ -152,6 +160,7 @@ class Assembler(Thread):
                 sabnzbd.nzbqueue.NzbQueue.do.remove(nzo.nzo_id, add_to_history=False, cleanup=False)
                 PostProcessor.do.process(nzo)
 
+    @retry(reraise=True, stop=stop_after_attempt(5), wait=wait_exponential(multiplier=1, min=1, max=10), retry=retry_if_exception_type(IOError))
     def assemble(self, nzf, path):
         """ Assemble a NZF from its table of articles """
         md5 = hashlib.md5()
